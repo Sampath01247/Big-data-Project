@@ -1,0 +1,81 @@
+---
+title: "test"
+output: html_document
+date: "2024-05-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+2) 
+
+```{r}
+
+# Load the necessary libraries
+library(dplyr)
+
+# Load the dataset
+data <- read.csv("C:\\Users\\G3\\Downloads\\waterdata.csv")
+
+# Load the necessary libraries
+library(ggplot2)
+
+
+# Filter out rows with missing values in relevant columns
+data_filtered <- data[!is.na(data$Secchi.Depth..m.) & !is.na(data$Water.Depth..m.), c("Secchi.Depth..m.", "Water.Depth..m.")]
+
+# Create a scatter plot to visualize the relationship between Secchi Depth and Water Depth
+ggplot(data_filtered, aes(x = Secchi.Depth..m., y = Water.Depth..m.)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Secchi Depth (m)", y = "Water Depth (m)", title = "Relation between Secchi Depth and Water Depth")
+
+```
+
+
+3)
+
+```{r}
+
+
+data_filtered <- data[!is.na(data$Year) & !is.na(data$pH..standard.units.), c("Year", "pH..standard.units.")]
+
+# Calculate average pH by year
+avg_ph_by_year <- data_filtered %>%
+  group_by(Year) %>%
+  summarize(Avg_pH = mean(`pH..standard.units.`))
+
+# Create a bar graph to visualize average pH by year
+ggplot(avg_ph_by_year, aes(x = factor(Year), y = Avg_pH, fill = factor(Year))) +
+  geom_bar(stat = "identity") +
+  labs(x = "Year", y = "Average pH (standard units)", title = "Average pH by Year") +
+  theme_minimal()
+
+```
+
+1)
+```{r}
+colnames(data)
+```
+
+```{r}
+
+
+library(dplyr)
+library(ggplot2) 
+
+
+ggplot(data, aes(x =Secchi.Depth..m. , y = Dissolved.Oxygen..mg.L.)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE) +  # Linear regression line
+  labs(x = "Secchi Depth (m)", y = "Dissolved Oxygen (mg/L)", title = "Water Quality Assessment") +
+  theme_minimal()
+
+
+
+
+
+
+```
+
